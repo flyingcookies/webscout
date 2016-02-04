@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html ng-app='app'>
+  <head>
+    <title>2468 Analytics</title>
+
+    <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.css">
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    
+    <link rel='stylesheet' type='text/css' href='/style.css' />
+  </head>
+
+  <body ng-controller="AppCtrl">
+    <script src='http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.js'></script>
+    <script src='http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-route.js'></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-aria.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-messages.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.js"></script>
+    
+    <script src='/app.js'></script>
+
+    <div layout='row' layout-fill>
+      <md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')">
+        <md-toolbar class='md-tall'>
+          
+        </md-toolbar>
+      </md-sidenav>
+
+      <div layout='column' layout-fill>
+        <md-toolbar>
+          <div class='md-toolbar-tools'>
+            <md-button class='md-icon-button' hide-gt-md ng-click="toggleSideNav('left')">
+              <md-icon>menu</md-icon>
+            </md-button>
+            <h2>
+              <span>Appreciate Analytics</span>
+            </h2>
+          </div>
+        </md-toolbar>
+        <md-content ng-view class='bg'></md-content>
+      </div>
+    </div>
+
+  </body>
+</html>
