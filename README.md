@@ -10,7 +10,7 @@ Runs on PHP and AngularJS
 
 3. run xampp
 
-4. open [http://localhost](http://localhost)
+4. open [http://localhost/webscout](http://localhost/webscout)
 
 5. Edit and enjoy!
 
