@@ -37,7 +37,12 @@ app.controller('AppCtrl', function($mdSidenav, $scope, $location, $http) {
 
   $scope.teams = {}
   $scope.lastMatch = 0
+  $scope.tournament = {}
   $scope.updateTeams = function(){
+    $http.get('/data/matchdata.json').success(function(data){
+      $scope.tournament = data
+    })
+
     $http.get('/teams.php').success(function(data){
       console.log("Got teams")
       
@@ -59,6 +64,18 @@ app.controller('AppCtrl', function($mdSidenav, $scope, $location, $http) {
     })
   }
 
+  $scope.getLastMatch = function() {
+    var matchData = []
+    for(var number in $scope.teams) {     
+      var team = $scope.teams[number]
+      var match = team.matches[$scope.lastMatch];
+      if(match) {
+        matchData.push({'team': number})
+      }
+    }
+    return matchData
+  }
+
   $scope.updateTeams();
 
 });
@@ -69,22 +86,15 @@ app.controller('OverviewCtrl', function($scope, $location) {
   $scope.lastMatchData = []
   $scope.numTeams = 0
 
-  $scope.$on('updateTeams', function() {
+  $scope.updateMatchData = function() {
     $scope.lastMatchData = $scope.getLastMatch()
     $scope.numTeams = Object.keys($scope.teams).length
     console.log('updated')
-  })
+  }
 
-  $scope.getLastMatch = function() {
-    var matchData = []
-    for(var number in $scope.teams) {     
-      var team = $scope.teams[number]
-      var match = team.matches[$scope.lastMatch];
-      if(match) {
-        matchData.push({'team': number, 'side': match.side || 'purple'})
-      }
-    }
-    return matchData
+  $scope.$on('updateTeams', $scope.updateMatchData)
+  if(!$scope.lastMatchData.length) {
+    $scope.updateMatchData();
   }
 
 });
