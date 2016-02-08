@@ -16,7 +16,7 @@
           </tr>
           <tr>
             <td class='label'>Matches</td>
-            <td>{{lastMatch}}</td>
+            <td>{{numMatches}}</td>
           </tr>
         </table>
       </md-content>
@@ -46,6 +46,35 @@
           </tr>
         </table>
       </md-content>
+    </md-card>
+  </section>
+  <section layout-gt-md='row' layout='column'>
+    <md-card flex>
+      <md-card-title>
+        <md-card-title-text>
+          <span class="md-headline">Match Overview</span>
+          <span class="md-subhead">A list of all matches</span>
+        </md-card-title-text>
+      </md-card-title>
+
+      <md-card-content>
+
+        <table>
+          <tr ng-repeat="data in tournament.matches">
+            <td>{{data.title}}</td>
+            <td ng-repeat="(id, team) in data.description.li" class='team' ng-class='{red: id<3, blue: id>=3}'>
+              {{team}}
+            </td>
+            <td class='team red'>
+              {{data.description.h1[0]}}
+            </td>
+            <td class='team blue'>
+              {{data.description.h1[1]}}
+            </td>
+          <tr/>
+        </table>
+
+      </md-card-content>
     </md-card>
   </section>
 
