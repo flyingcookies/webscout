@@ -23,17 +23,17 @@ span.team:last-child{
   border-bottom-right-radius: 0.3em;
 }
 
-span.team.red {
+.team.red {
   background: #FFCDD2;
   color: #B71C1C;
 }
 
-span.team.blue {
+.team.blue {
   background: #90CAF9;
   color: #0D47A1;
 }
 
-span.team.purple {
+.team.purple {
   background: #E1BEE7;
   color: #4A148C;
 }

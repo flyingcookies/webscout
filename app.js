@@ -38,9 +38,45 @@ app.controller('AppCtrl', function($mdSidenav, $scope, $location, $http) {
   $scope.teams = {}
   $scope.lastMatch = 0
   $scope.tournament = {}
+  $scope.numMatches = 0
+  $scope.numTeams = 0
   $scope.updateTeams = function(){
     $http.get('/data/matchdata.json').success(function(data){
       $scope.tournament = data
+      $scope.tournament.matches = {}
+      $scope.tournament.teams = {}
+
+      data.channel.item.forEach(function(match){
+        var redScore = match.description.h1[0]
+        var blueScore = match.description.h1[1]
+
+        var scoreRegex = /\d+$/
+        redScore = parseInt(scoreRegex.exec(redScore)[0])
+        blueScore = parseInt(scoreRegex.exec(blueScore)[0])
+        match.description.h1 = [redScore, blueScore]
+        match.type = match.title.split(' ')[0]
+
+        for(var i in match.description.li) {
+          // team number
+          var number = match.description.li[i]
+          if(!$scope.tournament.teams[number]) {
+            $scope.tournament.teams[number] = {
+              number: number,
+              matches: {}
+            }
+          }
+
+          $scope.tournament
+            .teams[number]
+            .matches[match.title] = {
+              score: (i < 3 ? redScore : blueScore)
+            }
+          $scope.tournament.matches[match.title] = match
+        }
+      })
+
+      $scope.numMatches = Object.keys($scope.tournament.matches).length
+      $scope.numTeams = Object.keys($scope.tournament.teams).length
     })
 
     $http.get('/teams.php').success(function(data){
@@ -84,11 +120,11 @@ app.controller('AppCtrl', function($mdSidenav, $scope, $location, $http) {
 app.controller('OverviewCtrl', function($scope, $location) {
 
   $scope.lastMatchData = []
-  $scope.numTeams = 0
+  $scope.numScoutedTeams = 0
 
   $scope.updateMatchData = function() {
     $scope.lastMatchData = $scope.getLastMatch()
-    $scope.numTeams = Object.keys($scope.teams).length
+    $scope.numScoutedTeams = Object.keys($scope.teams).length
     console.log('updated')
   }
 
