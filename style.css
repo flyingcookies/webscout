@@ -24,16 +24,40 @@ span.team:last-child{
 }
 
 .team.red {
-  background: #FFCDD2;
+  background: #FFEBEE;
   color: #B71C1C;
 }
 
 .team.blue {
-  background: #90CAF9;
+  background: #E3F2FD;
   color: #0D47A1;
 }
 
 .team.purple {
   background: #E1BEE7;
   color: #4A148C;
+}
+
+.bold {
+  font-weight: bold;
+}
+.team.bold {
+  text-decoration: underline;
+}
+
+.team a {
+  color: inherit;
+  text-decoration: none;
+}
+
+td.team {
+  min-width: 2.5em;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+table td.team {
+  padding: 0.2em;
 }

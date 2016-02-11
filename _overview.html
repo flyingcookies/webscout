@@ -36,7 +36,9 @@
             <td class='label'>Last Match</td>
             <td>
               <span ng-repeat='match in lastMatchData | orderBy: "side"' class='team {{match.side}}'>
-                {{match.team}}
+                <a ng-href='/#/team/{{match.team}}'>
+                  {{match.team}}
+                </a>
               </span>
             </td>
           </tr>
@@ -48,6 +50,28 @@
       </md-content>
     </md-card>
   </section>
+
+  <section layouy-gt-md='row' layout='column'>
+    <md-card flex>
+      <md-card-title>
+        <md-card-title-text>
+          <span class='md-headline'>Random Statistics</span>
+          <span class='md-subhead'>A few pie charts</span>
+        </md-card-title-text>
+      </md-card-title>
+
+      <md-card-content>
+
+        <div layout='row'>
+          <div google-chart chart="pie" style='width: 33%;'></div>
+          <div google-chart chart="pie" style='width: 33%;'></div>
+          <div google-chart chart="pie" style='width: 33%;'></div>
+        </div>
+
+      </md-card-content>
+    </md-card>
+  </section>
+
   <section layout-gt-md='row' layout='column'>
     <md-card flex>
       <md-card-title>
@@ -60,10 +84,18 @@
       <md-card-content>
 
         <table>
+          <tr>
+            <th>Match</th>
+            <th>Red</th><th></th><th></th>
+            <th>Blue</th><th></th><th></th>
+            <th>Score</th><th></th>
+          </tr>
           <tr ng-repeat="data in tournament.matches">
             <td>{{data.title}}</td>
             <td ng-repeat="(id, team) in data.description.li" class='team' ng-class='{red: id<3, blue: id>=3}'>
-              {{team}}
+              <a ng-href='/#/team/{{team}}'>
+                {{team}}
+              </a>
             </td>
             <td class='team red'>
               {{data.description.h1[0]}}
