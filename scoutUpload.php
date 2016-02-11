@@ -7,21 +7,34 @@ if($_FILES['upload']['error'] == UPLOAD_ERR_OK
   $contents = file_get_contents($_FILES['upload']['tmp_name']);
   $contents = preg_replace('(<!\\[CDATA\\[|\\]\\]>)', '', $contents);
   $contents = preg_replace('/[\\n\\t]/','', $contents);
-  $data = json_decode(json_encode(simplexml_load_string($contents)));
+
+  // if it's not json, convert it to json
+  if(!isset($_POST["json"]))
+    $data = json_encode(simplexml_load_string($contents))
+
+  $data = json_decode($data);
   
+  // if it's team data
   if(isset($_POST["team"])) {
     
+    // path for file storing team data
     $teamfile = "data/team_".$_POST["team"].".json";
 
+    // empty object for team
     $team = new StdClass();
+    // empty object for matches
     $team->matches = new StdClass();
 
+    // the team previously existed
     if(is_file($teamfile)) {
       $team = json_decode(file_get_contents($teamfile));
     }
 
+    // file name is a pit scout file
     if(preg_match('/(?<=^Team )\\d+/', $filename, $isPit)) { // file is pit data
       $team->pit = $data;
+
+      // file name is a match scout file
     } else if(preg_match('/(?<=^Match )((Quals|Semis|Quarters|Finals) )?\\d+/', $filename, $isMatch)) { //file is match data
       $num = $isMatch[0];
       $team->matches->$num = $data;

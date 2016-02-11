@@ -26,6 +26,10 @@ app.config(function($routeProvider, $mdThemingProvider){
   when('/team/:id', {
     templateUrl: '_team.html',
     controller: 'TeamCtrl'
+  }).
+  when('/scout', {
+    templateUrl: '_scout.html',
+    controller: 'ScoutCtrl'
   })
 
 });
@@ -94,12 +98,16 @@ app.controller('AppCtrl', function($mdSidenav, $scope, $location, $http) {
             for(var matchNum in team.matches)  {
               for(var key in team.matches[matchNum]) {
                 var value = team.matches[matchNum][key]
+
+                // check if the value is boolean
                 if(value == 'true' || value == 'false')
                   value = value == 'true'
                 
+                // check if the value is numeric
                 else if(/^\d+$/.exec(value)) 
                   value = parseInt(value)
 
+                // check if the value is a string (but glitched by php)
                 else if(Object.keys(value).length == 1 && value['0']) {
                   value = value['0']
                 }
@@ -232,5 +240,10 @@ app.controller('TeamCtrl', function($scope, $routeParams, $location){
   console.log($routeParams.id)
   $scope.teamNumber = $routeParams.id
 });
+
+app.controller('ScoutCtrl', function($scope, $location){
+
+});
+
 
 })();
