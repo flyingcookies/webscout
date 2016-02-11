@@ -9,6 +9,10 @@ td.label {
   text-transform: capitalize;
 }
 
+.autocap {
+  text-transform: capitalize;
+}
+
 span.team {
   padding: 0.2em;  
   font-weight: bold;
