@@ -8,6 +8,20 @@
     </md-card-title>
 
     <md-content layout-padding>
+      {{teams[teamNumber]}}
+      <table>
+        <tr ng-repeat='key in matchKeys'>
+          <td class='label'>
+            {{key}}
+          </td>
+          <td>
+            {{matchKeyTypes[key]}}
+          </td>
+          <td>
+            {{getStats(teamNumber, key)}}
+          </td>
+        </tr>
+      </table>
     </md-content>
   </md-card>
 

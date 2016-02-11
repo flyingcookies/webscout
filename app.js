@@ -39,6 +39,8 @@ app.controller('AppCtrl', function($mdSidenav, $scope, $location, $http) {
   $scope.lastMatch = 0
   $scope.tournament = {}
   $scope.numMatches = 0
+  $scope.matchKeys = []
+  $scope.matchKeyTypes = {}
   $scope.numTeams = 0
   $scope.updateTeams = function(){
     $http.get('/data/matchdata.json').success(function(data){
@@ -87,13 +89,43 @@ app.controller('AppCtrl', function($mdSidenav, $scope, $location, $http) {
         $http.get('/data/'+fileName).success(function(team){
           console.log("Got team "+number)
           team.number = number;
-          $scope.teams[number] = team;
-          
-          var lastMatch = parseInt(Object.keys(team.matches).sort().reverse()[0] || 0)
-          if(lastMatch > $scope.lastMatch) {
-            $scope.lastMatch = lastMatch
+
+          if(Object.keys(team.matches).length) {
+            for(var matchNum in team.matches)  {
+              for(var key in team.matches[matchNum]) {
+                var value = team.matches[matchNum][key]
+                if(value == 'true' || value == 'false')
+                  value = value == 'true'
+                
+                else if(/^\d+$/.exec(value)) 
+                  value = parseInt(value)
+
+                else if(Object.keys(value).length == 1 && value['0']) {
+                  value = value['0']
+                }
+
+                team.matches[matchNum][key] = value
+              }
+            }
+
+            if(!$scope.matchKeys.length && Object.keys(team.matches).length) {
+              var firstMatch = Object.keys(team.matches)[0]
+              $scope.matchKeys = Object.keys(team.matches[firstMatch])
+              $scope.matchKeys.splice(0, 1)
+              for(var i in $scope.matchKeys) {
+                var key = $scope.matchKeys[i]
+                console.log(key, "is", typeof team.matches[firstMatch][key])
+                $scope.matchKeyTypes[key] = typeof team.matches[firstMatch][key]
+              }
+            }
+
+            var lastMatch = parseInt(Object.keys(team.matches).sort().reverse()[0] || 0)
+            if(lastMatch > $scope.lastMatch) {
+              $scope.lastMatch = lastMatch
+            }
           }
 
+          $scope.teams[number] = team;
           $scope.$broadcast('updateTeams')
         })
       })
@@ -104,12 +136,43 @@ app.controller('AppCtrl', function($mdSidenav, $scope, $location, $http) {
     var matchData = []
     for(var number in $scope.teams) {     
       var team = $scope.teams[number]
+      if(!Object.keys(team.matches).length) 
+        continue;
+
       var match = team.matches[$scope.lastMatch];
       if(match) {
         matchData.push({'team': number})
       }
     }
     return matchData
+  }
+
+  $scope.getStats = function(team, attr) {
+    var type = $scope.matchKeyTypes[attr]
+    if(!$scope.teams[team])
+      return ['N/A']
+    var matches = $scope.teams[team].matches
+
+    switch(type) {
+      case 'string':
+        break;
+      case 'number':
+        var total = 0
+        var average = 0
+        for(var num in matches) {
+          total += matches[num][attr]
+        }
+        return [total, total / Object.keys(matches).length]
+      case 'boolean':
+        var successes = 0
+        for(var num in matches) {
+          if(matches[num][attr])
+            successes ++
+        }
+        return [successes / Object.keys(matches).length]
+      default:
+        return ['N/A']
+    }
   }
 
   $scope.updateTeams();

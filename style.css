@@ -6,6 +6,7 @@ body, html, md-content.bg{
 td.label {
   text-align: right;
   font-weight: bold;
+  text-transform: capitalize;
 }
 
 span.team {
@@ -34,7 +35,7 @@ span.team:last-child{
 }
 
 .team.purple {
-  background: #E1BEE7;
+  background: #EDE7F6;
   color: #4A148C;
 }
 
