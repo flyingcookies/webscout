@@ -26,6 +26,16 @@
         <md-toolbar class='md-tall'>
           
         </md-toolbar>
+
+        <md-list>
+          <!-- Default menu -->
+          <md-list-item ng-repeat="item in menu" md-ink-ripple ng-click="setPath(item.path)">
+            <span class='md-list-item-content'>
+              <md-icon>{{item.icon}}</md-icon>
+              <span>{{item.title}}</span>
+            </span>
+          </md-list-item>
+        </md-list>
       </md-sidenav>
 
       <div layout='column' layout-fill>

@@ -1,0 +1,68 @@
+<section layout='column'>
+  <section layout-gt-md='row' layout='column'>
+    <md-card flex>
+      <md-card-title>
+        <md-card-title-text>
+          <span class="md-headline">New Match Scout</span>
+          <span class="md-subhead">Scout a match for an individual team</span>
+        </md-card-title-text>
+      </md-card-title>
+
+      <md-card-content layout-padding>
+        <div layout='column'>
+          <md-checkbox ng-model='boolean'>
+            Boolean
+          </md-checkbox>
+          <md-input-container>
+            <label>String</label>
+            <input type="text" ng-model='string'>
+          </md-input-container>
+          <md-input-container>
+            <label>Number</label>
+            <input type="number" min=0 max=5 ng-model='number'>
+          </md-input-container>
+          <md-radio-group ng-model='radio'>
+            <md-radio-button ng-value='1'>
+              Radio 1
+            </md-radio-button>
+            <md-radio-button  ng-value='2'>
+              Radio 2
+            </md-radio-button>
+            <md-radio-button ng-value='3'>
+              Radio 3
+            </md-radio-button>
+          </md-radio-group>
+
+        </div>
+      </md-card-content>
+    </md-card>
+
+    <md-card flex>
+      <md-card-title>
+        <md-card-title-text>
+          <span class="md-headline">Last Update</span>
+          <span class="md-subhead">Time since last data dump</span>
+        </md-card-title-text>
+      </md-card-title>
+      
+      <md-card-content layout-padding>
+        <table>
+          <tr>
+            <td class='label'>Last Match</td>
+            <td>
+              <span ng-repeat='match in lastMatchData | orderBy: "side"' class='team {{match.side}}'>
+                <a ng-href='/#/team/{{match.team}}'>
+                  {{match.team}}
+                </a>
+              </span>
+            </td>
+          </tr>
+          <tr>
+            <td class='label'>Matches</td>
+            <td>{{lastMatch}}</td>
+          </tr>
+        </table>
+      </md-card-content>
+    </md-card>
+  </section>
+</section>
