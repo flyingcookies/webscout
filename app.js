@@ -1,7 +1,7 @@
 (function(){
 
 
-var app = angular.module('app', ['ngRoute', 'ngMaterial']);
+var app = angular.module('app', ['ngRoute', 'ngMaterial', 'googlechart']);
 
 app.config(function($routeProvider, $mdThemingProvider){
 
@@ -133,10 +133,41 @@ app.controller('OverviewCtrl', function($scope, $location) {
     $scope.updateMatchData();
   }
 
+  $scope.pie = {
+    type: 'PieChart'
+  }
+
+  $scope.pie.data = {"cols": [
+        {id: "t", label: "Topping", type: "string"},
+        {id: "s", label: "Slices", type: "number"}
+    ], "rows": [
+        {c: [
+            {v: "Mushrooms"},
+            {v: 3},
+        ]},
+        {c: [
+            {v: "Olives"},
+            {v: 31}
+        ]},
+        {c: [
+            {v: "Zucchini"},
+            {v: 1},
+        ]},
+        {c: [
+            {v: "Pepperoni"},
+            {v: 2},
+        ]}
+    ]};
+
+    $scope.pie.options = {
+        'legend': 'none'
+    };
+
 });
 
-app.controller('TeamCtrl', function($scope, $location){
-
+app.controller('TeamCtrl', function($scope, $routeParams, $location){
+  console.log($routeParams.id)
+  $scope.teamNumber = $routeParams.id
 });
 
 })();
