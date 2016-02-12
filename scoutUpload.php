@@ -1,12 +1,19 @@
 <?php
 
 if($_FILES['upload']['error'] == UPLOAD_ERR_OK
-      && is_uploaded_file($_FILES['upload']['tmp_name'])) {
+      && is_uploaded_file($_FILES['upload']['tmp_name']) || isset($_POST['jsondata'])) {
 
-  $filename = $_FILES['upload']['name'];
-  $contents = file_get_contents($_FILES['upload']['tmp_name']);
-  $contents = preg_replace('(<!\\[CDATA\\[|\\]\\]>)', '', $contents);
-  $contents = preg_replace('/[\\n\\t]/','', $contents);
+  // handle posted data differently than uploaded files
+  if(isset($_POST['jsondata'])) {
+    $filename = $_POST['filename']
+    $contents = $_POST['jsondata']
+
+  } else {
+    $filename = $_FILES['upload']['name'];
+    $contents = file_get_contents($_FILES['upload']['tmp_name']);
+    $contents = preg_replace('(<!\\[CDATA\\[|\\]\\]>)', '', $contents);
+    $contents = preg_replace('/[\\n\\t]/','', $contents);
+  }
 
   // if it's not json, convert it to json
   if(!isset($_POST["json"]))

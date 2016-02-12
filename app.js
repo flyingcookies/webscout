@@ -4,7 +4,6 @@ function cleanValues(hash) {
   for(var key in hash) {
     var value = hash[key]
 
-    console.log(value)
     // check if the value is boolean
     if(value == 'true' || value == 'false')
       value = value == 'true'
@@ -54,10 +53,15 @@ app.config(function($routeProvider, $mdThemingProvider){
     templateUrl: '_team.html',
     controller: 'TeamCtrl'
   }).
-  when('/scout', {
-    templateUrl: '_scout.html',
+  when('/scout/pit', {
+    templateUrl: '_pitscout.html',
     controller: 'ScoutCtrl'
   }).
+  when('/scout/match', {
+    templateUrl: '_matchscout.html',
+    controller: 'ScoutCtrl'
+  }).
+  when('/scout', { redirectTo: '/scout/match'}).
   otherwise({ redirectTo: '/overview' })
 
 });
@@ -280,6 +284,113 @@ app.controller('TeamCtrl', function($scope, $routeParams, $location){
 });
 
 app.controller('ScoutCtrl', function($scope, $location){
+  $scope.scout = {}
+  
+  $scope.scoutMeta = {
+      teamNumber: {
+        type:'string',
+      },
+      teamName: {
+        type:'string'
+      },
+      driveType: {
+        type:'string',
+      },
+      wheelType: {
+        type:'string'
+      },
+      wheelNumber: {
+        type:'number'
+      },
+      cimNumber: {
+        type:'number'
+      },
+      maxSpeed: {
+        type:'string'
+      },
+      mainComment: {
+        type:'string'
+      },
+      port: {
+        type:'boolean'
+      },
+      cheval: {
+        type:'boolean'
+      },
+      moat: {
+        type:'boolean'
+      },
+      ramp: {
+        type:'boolean'
+      },
+      draw: {
+        type:'boolean'
+      },
+      sally: {
+        type:'boolean'
+      },
+      rock: {
+        type:'boolean'
+      },
+      rough: {
+        type:'boolean'
+      },
+      functional: {
+        type:'boolean'
+      },
+      startWithBall: {
+        type:'boolean'
+      },
+      autoSpy: {
+        type:'boolean'
+      },
+      shootBall: {
+        type:'boolean'
+      },
+      grabBall: {
+        type:'boolean'
+      },
+  }
+
+  if($location.url() == '/scout/pit') {
+    $scope.scout = {
+      main: {
+        teamNumber: '',
+        teamName: '',
+        driveType: '',
+        wheelType: '',
+        wheelNumber: 4,
+        cimNumber: 2,
+        maxSpeed: '',
+        mainComment: ''
+      },
+      defenses: {
+        port: false,
+        cheval: false,
+        moat: false,
+        ramp: false,
+        draw: false,
+        sally: false,
+        rock: false,
+        rough: false
+      },
+      auto: {
+        functional: false,
+        startWithBall: false,
+        autoSpy: false
+      },
+      abilities: {
+        shootBall: false,
+        grabBall: false,
+      }
+    }
+  } else {
+    $scope.scout = {
+      autoZone: false,
+      defensePicked: '',
+
+    }
+  }
 
 });
 
