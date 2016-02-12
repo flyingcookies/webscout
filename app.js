@@ -38,12 +38,12 @@ app.controller('AppCtrl', function($mdSidenav, $scope, $location, $http) {
   $scope.teams = {}
   $scope.lastMatch = 0
   $scope.updateTeams = function(){
-    $http.get('/teams.php').success(function(data){
+    $http.get('teams.php').success(function(data){
       console.log("Got teams")
       
       data.teams.forEach(function(fileName){
         var number = /\d+/.exec(fileName)[0];
-        $http.get('/data/'+fileName).success(function(team){
+        $http.get('data/'+fileName).success(function(team){
           console.log("Got team "+number)
           team.number = number;
           $scope.teams[number] = team;
