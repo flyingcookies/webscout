@@ -101,7 +101,8 @@ app.controller('AppCtrl', function($mdSidenav, $scope, $location, $http) {
   $scope.matchKeyTypes = {}
   $scope.numTeams = 0
   $scope.updateTeams = function(){
-    $http.get('/data/matchdata.json').success(function(data){
+
+    $http.get('data/matchdata.json').success(function(data){
       $scope.tournament = data
       $scope.tournament.matches = {}
       $scope.tournament.teams = {}
@@ -139,12 +140,13 @@ app.controller('AppCtrl', function($mdSidenav, $scope, $location, $http) {
       $scope.numTeams = Object.keys($scope.tournament.teams).length
     })
 
-    $http.get('/teams.php').success(function(data){
+    $http.get('teams.php').success(function(data){
+
       console.log("Got teams")
       
       data.teams.forEach(function(fileName){
         var number = /\d+/.exec(fileName)[0];
-        $http.get('/data/'+fileName).success(function(team){
+        $http.get('data/'+fileName).success(function(team){
           console.log("Got team "+number)
           team.number = number;
           if(team.pit) {
