@@ -69,7 +69,7 @@
         <tr ng-repeat="data in tournament.matches" ng-if='data.description.li.includes(teamNumber)'>
           <td>{{data.title}}</td>
           <td ng-repeat="(id, team) in data.description.li" class='team' ng-class='{red: id<3, blue: id>=3, bold: team==teamNumber}'>
-            <a ng-href='/#/team/{{team}}'>
+            <a ng-href='#/team/{{team}}'>
               {{team}}
             </a>
           </td>
