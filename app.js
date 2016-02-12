@@ -80,12 +80,12 @@ app.controller('AppCtrl', function($mdSidenav, $scope, $location, $http) {
     {
         title: 'Pit Scout',
         icon: 'create',
-        path: '/scout'
+        path: '/scout/pit'
     },
     {
         title: 'Match Scout',
         icon: 'add',
-        path: '/scout'
+        path: '/scout/match'
     }
   ];
 
@@ -288,67 +288,88 @@ app.controller('ScoutCtrl', function($scope, $location){
   
   $scope.scoutMeta = {
       teamNumber: {
-        type:'string',
+        type: 'string',
+        name: 'Team Number'
       },
       teamName: {
-        type:'string'
+        type: 'string',
+        name: 'Team Name'
       },
       driveType: {
-        type:'string',
+        type: 'string',
+        name: 'Drive Type'
       },
       wheelType: {
-        type:'string'
+        type: 'string',
+        name: 'Wheel Type'
       },
       wheelNumber: {
-        type:'number'
+        type: 'number',
+        name: 'Number of Wheels'
       },
       cimNumber: {
-        type:'number'
+        type: 'number',
+        name: 'Number of CIMs'
       },
       maxSpeed: {
-        type:'string'
+        type: 'string',
+        name: 'Max Speed'
       },
-      mainComment: {
-        type:'string'
+      comment: {
+        type: 'string',
+        name: 'Additional Comments'
       },
       port: {
-        type:'boolean'
+        type: 'boolean',
+        name: 'Porticullus (Gate)'
       },
       cheval: {
-        type:'boolean'
+        type: 'boolean',
+        name: 'Cheval de Frize (Tilting)'
       },
       moat: {
-        type:'boolean'
+        type: 'boolean',
+        name: 'Moat'
       },
       ramp: {
-        type:'boolean'
+        type: 'boolean',
+        name: 'Ramparts'
       },
       draw: {
-        type:'boolean'
+        type: 'boolean',
+        name: 'Drawbridge'
       },
       sally: {
-        type:'boolean'
+        type: 'boolean',
+        name: 'Sally Port'
       },
       rock: {
-        type:'boolean'
+        type: 'boolean',
+        name: 'Rock Wall'
       },
       rough: {
-        type:'boolean'
+        type: 'boolean',
+        name: 'Rough Terrain'
       },
       functional: {
-        type:'boolean'
+        type: 'boolean',
+        name: 'Functional'
       },
       startWithBall: {
-        type:'boolean'
+        type: 'boolean',
+        name: 'Starts with Ball'
       },
       autoSpy: {
-        type:'boolean'
+        type: 'boolean',
+        name: 'Autonomous Spy'
       },
       shootBall: {
-        type:'boolean'
+        type: 'boolean',
+        name: 'Can Shoot Balls'
       },
       grabBall: {
-        type:'boolean'
+        type: 'boolean',
+        name: 'Can Grab Balls'
       },
   }
 
@@ -362,7 +383,7 @@ app.controller('ScoutCtrl', function($scope, $location){
         wheelNumber: 4,
         cimNumber: 2,
         maxSpeed: '',
-        mainComment: ''
+        comment: ''
       },
       defenses: {
         port: false,
@@ -372,16 +393,19 @@ app.controller('ScoutCtrl', function($scope, $location){
         draw: false,
         sally: false,
         rock: false,
-        rough: false
+        rough: false,
+        comment: ''
       },
       auto: {
         functional: false,
         startWithBall: false,
-        autoSpy: false
+        autoSpy: false,
+        comment: ''
       },
       abilities: {
         shootBall: false,
         grabBall: false,
+        comment: ''
       }
     }
   } else {
