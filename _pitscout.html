@@ -14,14 +14,14 @@
             <h4 class='md-title autocap'>{{section}}</h3>
             <div ng-repeat='(key, val) in data'>
               <md-checkbox ng-model='data[key]' ng-if="scoutMeta[key].type == 'boolean'" class='autocap'>
-                {{key}}
+                {{scoutMeta[key].name}}
               </md-checkbox>
               <md-input-container ng-if="scoutMeta[key].type == 'string'">
-                <label class='autocap'>{{key}}</label>
+                <label class='autocap'>{{scoutMeta[key].name}}</label>
                 <input type="text" ng-model='data[key]'>
               </md-input-container>
               <md-input-container ng-if="scoutMeta[key].type == 'number'">
-                <label class='autocap'>{{key}}</label>
+                <label class='autocap'>{{scoutMeta[key].name}}</label>
                 <input type="number" ng-model='data[key]'>
               </md-input-container>
               <md-radio-group ng-model='data[key]' ng-if="scoutMeta[key].type == 'radio'">
