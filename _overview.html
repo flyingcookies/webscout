@@ -36,7 +36,7 @@
             <td class='label'>Last Match</td>
             <td>
               <span ng-repeat='match in lastMatchData | orderBy: "side"' class='team {{match.side}}'>
-                <a ng-href='/#/team/{{match.team}}'>
+                <a ng-href='#/team/{{match.team}}'>
                   {{match.team}}
                 </a>
               </span>
@@ -93,7 +93,7 @@
           <tr ng-repeat="data in tournament.matches">
             <td>{{data.title}}</td>
             <td ng-repeat="(id, team) in data.description.li" class='team' ng-class='{red: id<3, blue: id>=3}'>
-              <a ng-href='/#/team/{{team}}'>
+              <a ng-href='#/team/{{team}}'>
                 {{team}}
               </a>
             </td>
