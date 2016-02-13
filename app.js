@@ -210,7 +210,6 @@ app.controller('AppCtrl', function($mdSidenav, $scope, $location, $http) {
         break;
       case 'number':
         var total = 0
-        var average = 0
         for(var num in matches) {
           total += matches[num][attr]
         }
