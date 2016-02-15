@@ -25,8 +25,9 @@
                 <input type="number" ng-model='data[key]'>
               </md-input-container>
               <md-radio-group ng-model='data[key]' ng-if="scoutMeta[key].type == 'radio'">
+                <!-- put ng-repeat on md-radio button for every item in scoutmeta.options-->
                 <md-radio-button ng-value='1'>
-                  Radio 1
+                  Radio 1 -- Redundant rn because no radio scouting tools
                 </md-radio-button>
                 <md-radio-button  ng-value='2'>
                   Radio 2
@@ -37,7 +38,9 @@
               </md-radio-group>
             </div>
           </article>
-
+          <md-button class='md-raised md-primary' ng-click='submit()'>
+            Submit
+          </md-button>
         </div>
       </md-card-content>
     </md-card>
