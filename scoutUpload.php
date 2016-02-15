@@ -1,31 +1,37 @@
 <?php
-
+    
 if($_FILES['upload']['error'] == UPLOAD_ERR_OK
-      && is_uploaded_file($_FILES['upload']['tmp_name']) || isset($_POST['jsondata'])) {
+      && is_uploaded_file($_FILES['upload']['tmp_name']) || isset($_GET['json'])) {
 
   // handle posted data differently than uploaded files
-  if(isset($_POST['jsondata'])) {
-    $filename = $_POST['filename']
-    $contents = $_POST['jsondata']
+  if(isset($_GET['json'])) {
+    $filename = $_GET['filename'];
+    $data = $_GET['json'];
 
   } else {
     $filename = $_FILES['upload']['name'];
     $contents = file_get_contents($_FILES['upload']['tmp_name']);
+    // remove cdata tags
     $contents = preg_replace('(<!\\[CDATA\\[|\\]\\]>)', '', $contents);
+    // remove whitespace
     $contents = preg_replace('/[\\n\\t]/','', $contents);
+  
+    // convert it to json
+    $data = json_encode(simplexml_load_string($contents));
   }
-
-  // if it's not json, convert it to json
-  if(!isset($_POST["json"]))
-    $data = json_encode(simplexml_load_string($contents))
 
   $data = json_decode($data);
   
-  // if it's team data
-  if(isset($_POST["team"])) {
-    
+  if(isset($_POST['team']))
+    $team = $_POST["team"];
+  
+  if(isset($_GET['team'])) // angular didn't let me post...
+    $team = $_GET['team'];
+
+  // if it's team data (not match xml data)
+  if(isset($team)) {
     // path for file storing team data
-    $teamfile = "data/team_".$_POST["team"].".json";
+    $teamfile = "data/team_".$team.".json";
 
     // empty object for team
     $team = new StdClass();
