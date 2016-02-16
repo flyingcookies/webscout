@@ -374,6 +374,62 @@ app.controller('ScoutCtrl', function($scope, $location, $http){
         type: 'boolean',
         name: 'Can Grab Balls'
       },
+      canLift: {
+        type: 'boolean',
+        name: 'Can Lift'
+      },
+      defensePicked: {
+        type: 'radio',
+        name: 'Defense Picked',
+        options: {
+          "port": "Porticullus",
+          "cheval": "Cheval de Frize", 
+          "moat": "Moat",
+          "ramp": "Ramparts",
+          "draw": "Drawbridge",
+          "sally": "Sally Port",
+          "rock": "Rock Wall",
+          "rough": "Rough Terrain"
+        }
+      },
+      placement: {
+        type: 'image',
+        options: {
+          src: 'halffield.png'
+        },
+        name: 'Robot Placement'
+      },
+      startWithBall: {
+        type: 'boolean',
+        name: 'Starts With Ball'
+      },
+      autoSpy: {
+        type: 'boolean',
+        name: 'Spy Zone'
+      },
+      noMove: {
+        type: 'boolean',
+        name: "Robot Doesn't Move"
+      },
+      autoZone: {
+        type: 'boolean',
+        name: 'Robot in Auto Zone'
+      },
+      defenses: {
+        type: 'multi',
+        name: 'Defenses'
+      },
+      shots: {
+        type: 'multi',
+      },
+      lift: {
+        type: 'boolean',
+        name: 'Ends on Lift'
+      },
+      base: {
+        type: 'boolean',
+        name: 'Ends on Base'
+      }
   }
 
   $scope.type = 'match'
@@ -410,13 +466,31 @@ app.controller('ScoutCtrl', function($scope, $location, $http){
       abilities: {
         shootBall: false,
         grabBall: false,
+        canLift: false,
         comment: ''
       }
     }
   } else {
     $scope.scout = {
-      autoZone: false,
-      defensePicked: '',
+      pregame: {
+        defensePicked: '',
+        placement: ''
+      },
+      autonomous: {
+        startWithBall: false,
+        autoSpy: false,
+        noMove: false,
+        autoZone: false
+      },
+      teleop: {
+        noMove: false,
+        defenses: [],
+        shots: []
+      },
+      endgame: {
+        lift: false,
+        base: false
+      }
 
     }
   }
@@ -444,6 +518,18 @@ app.controller('ScoutCtrl', function($scope, $location, $http){
     }).error(function(err){
       console.log(err)
     })
+  }
+
+  $scope.handleImageInput = function($event) {
+    var element = $event.srcElement
+    var x = event.offsetX / element.clientWidth
+    var y = event.offsetY / element.clientHeight
+    var cursor = element.parentNode.querySelector('.cursor');
+    cursor.style.left = (element.x + event.offsetX)+'px'
+    cursor.style.top = (element.y + event.offsetY)+'px'
+    console.log(event, element.offsetTop, cursor.style.top)
+    //console.log(element.parentNode.querySelector('.cursor'))
+    console.log(Math.floor(x*1000)/10, Math.floor(y*1000)/10)
   }
 
 });
