@@ -13,29 +13,35 @@
           <article ng-repeat='(section, data) in scout' flex>
             <h4 class='md-title autocap'>{{section}}</h3>
             <div ng-repeat='(key, val) in data'>
-              <md-checkbox ng-model='data[key]' ng-if="scoutMeta[key].type == 'boolean'" class='autocap'>
-                {{scoutMeta[key].name}}
-              </md-checkbox>
-              <md-input-container ng-if="scoutMeta[key].type == 'string'">
-                <label class='autocap'>{{scoutMeta[key].name}}</label>
-                <input type="text" ng-model='data[key]'>
-              </md-input-container>
-              <md-input-container ng-if="scoutMeta[key].type == 'number'">
-                <label class='autocap'>{{scoutMeta[key].name}}</label>
-                <input type="number" ng-model='data[key]'>
-              </md-input-container>
-              <md-radio-group ng-model='data[key]' ng-if="scoutMeta[key].type == 'radio'">
-                <!-- put ng-repeat on md-radio button for every item in scoutmeta.options-->
-                <md-radio-button ng-value='1'>
-                  Radio 1 -- Redundant rn because no radio scouting tools
-                </md-radio-button>
-                <md-radio-button  ng-value='2'>
-                  Radio 2
-                </md-radio-button>
-                <md-radio-button ng-value='3'>
-                  Radio 3
-                </md-radio-button>
-              </md-radio-group>
+
+              <div ng-if="scoutMeta[key].type=='boolean'">
+                <md-checkbox ng-model='data[key]' ng-if="scoutMeta[key].type=='boolean'" class='autocap'>
+                  {{scoutMeta[key].name}}
+                </md-checkbox>
+              </div>
+
+              <div ng-if="scoutMeta[key].type=='string'">
+                <md-input-container>
+                  <label class='autocap'>{{scoutMeta[key].name}}</label>
+                  <input type="text" ng-model='data[key]'>
+                </md-input-container>
+                </div>
+              
+              <div ng-if="scoutMeta[key].type=='number'">
+                <md-input-container>
+                  <label class='autocap'>{{scoutMeta[key].name}}</label>
+                  <input type="number" ng-model='data[key]'>
+                </md-input-container>
+              </div>
+              
+              <div ng-if="scoutMeta[key].type=='radio'">
+                <md-radio-group ng-model='data[key]'>
+                  <md-radio-button ng-repeat='(key, label) in scoutMeta[key].options' ng-value='{{key}}'>
+                    {{label}}
+                  </md-radio-button>
+                </md-radio-group>
+              </div>
+
             </div>
           </article>
           <md-button class='md-raised md-primary' ng-click='submit()'>
