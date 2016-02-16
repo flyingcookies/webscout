@@ -144,43 +144,45 @@ app.controller('AppCtrl', function($mdSidenav, $scope, $location, $http) {
 
       console.log("Got teams")
       
-      data.teams.forEach(function(fileName){
-        var number = /\d+/.exec(fileName)[0];
-        $http.get('data/'+fileName).success(function(team){
-          console.log("Got team "+number)
-          team.number = number;
-          if(team.pit) {
-            console.log('has pit')
-            team.pit = cleanValues(team.pit)
+      data.teams.forEach($scope.handleTeam)
+    })
+  }
 
+  $scope.handleTeam = function(fileName){
+    var number = /\d+/.exec(fileName)[0];
+    $http.get('data/'+fileName).success(function(team){
+      console.log("Got team "+number)
+      team.number = number;
+      if(team.pit) {
+        console.log('has pit')
+        team.pit = cleanValues(team.pit)
+
+      }
+
+      if(Object.keys(team.matches).length) {
+        for(var matchNum in team.matches)  {
+          team.matches[matchNum] = cleanValues(team.matches[matchNum])
+        }
+
+        if(!$scope.matchKeys.length && Object.keys(team.matches).length) {
+          var firstMatch = Object.keys(team.matches)[0]
+          $scope.matchKeys = Object.keys(team.matches[firstMatch])
+          $scope.matchKeys.splice(0, 1)
+          for(var i in $scope.matchKeys) {
+            var key = $scope.matchKeys[i]
+            console.log(key, "is", typeof team.matches[firstMatch][key])
+            $scope.matchKeyTypes[key] = typeof team.matches[firstMatch][key]
           }
+        }
 
-          if(Object.keys(team.matches).length) {
-            for(var matchNum in team.matches)  {
-              team.matches[matchNum] = cleanValues(team.matches[matchNum])
-            }
+        var lastMatch = parseInt(Object.keys(team.matches).sort().reverse()[0] || 0)
+        if(lastMatch > $scope.lastMatch) {
+          $scope.lastMatch = lastMatch
+        }
+      }
 
-            if(!$scope.matchKeys.length && Object.keys(team.matches).length) {
-              var firstMatch = Object.keys(team.matches)[0]
-              $scope.matchKeys = Object.keys(team.matches[firstMatch])
-              $scope.matchKeys.splice(0, 1)
-              for(var i in $scope.matchKeys) {
-                var key = $scope.matchKeys[i]
-                console.log(key, "is", typeof team.matches[firstMatch][key])
-                $scope.matchKeyTypes[key] = typeof team.matches[firstMatch][key]
-              }
-            }
-
-            var lastMatch = parseInt(Object.keys(team.matches).sort().reverse()[0] || 0)
-            if(lastMatch > $scope.lastMatch) {
-              $scope.lastMatch = lastMatch
-            }
-          }
-
-          $scope.teams[number] = team;
-          $scope.$broadcast('updateTeams')
-        })
-      })
+      $scope.teams[number] = team;
+      $scope.$broadcast('updateTeams')
     })
   }
 
@@ -284,7 +286,7 @@ app.controller('TeamCtrl', function($scope, $routeParams, $location){
   $scope.teamNumber = $routeParams.id
 });
 
-app.controller('ScoutCtrl', function($scope, $location){
+app.controller('ScoutCtrl', function($scope, $location, $http){
   $scope.scout = {}
   
   $scope.scoutMeta = {
@@ -374,7 +376,9 @@ app.controller('ScoutCtrl', function($scope, $location){
       },
   }
 
+  $scope.type = 'match'
   if($location.url() == '/scout/pit') {
+    $scope.type = 'pit'
     $scope.scout = {
       main: {
         teamNumber: '',
@@ -415,6 +419,31 @@ app.controller('ScoutCtrl', function($scope, $location){
       defensePicked: '',
 
     }
+  }
+
+  $scope.submit = function() {
+    var data = $scope.scout
+    var teamNumber = data.main && data.main.teamNumber || $scope.teamNumber;
+    console.log("team: "+teamNumber)
+    var filename = 'Team '+teamNumber;
+    if($scope.type != 'pit') {
+      filename = 'Match '+$scope.matchNum;
+    }
+    $http({
+      url: 'scoutUpload.php',
+      method: 'GET',
+      params: {
+        json: data,
+        team: teamNumber,
+        filename: filename
+      }
+    }).success(function(data){
+      console.log(data)
+      $scope.handleTeam('team_'+teamNumber+'.json')
+      $location.path('/team/'+teamNumber)
+    }).error(function(err){
+      console.log(err)
+    })
   }
 
 });
