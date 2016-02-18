@@ -1,0 +1,11 @@
+Boulder Scored
+<span ng-init='parentKey=key' ng-init='parentVal=val'>
+<md-list>
+  <md-list-item ng-repeat='row in parentVal'>
+    ({{row.x}},{{row.y}}) -> {{row.goal}}
+  </md-list-item>
+</md-list>
+<section layout-gt-md='row' layout='column'>
+  <div ng-repeat='(key, val) in val' ng-init='name=scoutMeta[parentKey].options[key]' ng-include="'templates/number.html'">
+  </div>
+</section>

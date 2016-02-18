@@ -1,0 +1,6 @@
+Defenses Acquired
+<span ng-init='parentKey=key' ng-init='data=val'>
+<section layout-gt-md='row' layout='column'>
+  <div ng-repeat='(key, val) in val' ng-init='name=scoutMeta[parentKey].options[key]' ng-include="'templates/number.html'">
+  </div>
+</section>

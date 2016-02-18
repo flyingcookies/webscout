@@ -416,8 +416,18 @@ app.controller('ScoutCtrl', function($scope, $location, $http){
         name: 'Robot in Auto Zone'
       },
       defenses: {
-        type: 'multi',
-        name: 'Defenses'
+        type: 'defense',
+        name: 'Defenses',
+        options: {
+          "port": "Porticullus",
+          "cheval": "Cheval de Frize", 
+          "moat": "Moat",
+          "ramp": "Ramparts",
+          "draw": "Drawbridge",
+          "sally": "Sally Port",
+          "rock": "Rock Wall",
+          "rough": "Rough Terrain"
+        }
       },
       shots: {
         type: 'multi',
@@ -484,7 +494,16 @@ app.controller('ScoutCtrl', function($scope, $location, $http){
       },
       teleop: {
         noMove: false,
-        defenses: [],
+        defenses: {
+          "port": 0,
+          "cheval": 0, 
+          "moat": 0,
+          "ramp": 0,
+          "draw": 0,
+          "sally": 0,
+          "rock": 0,
+          "rough": 0
+        },
         shots: []
       },
       endgame: {
