@@ -12,7 +12,7 @@
         <div layout='column'>
           <article ng-repeat='(section, data) in scout' flex>
             <h4 class='md-title autocap'>{{section}}</h3>
-            <div ng-repeat='(key, val) in data' ng-include="templates/{{scoutMeta[key].type}}.html"/>
+            <div ng-repeat='(key, val) in data' ng-include="'templates/'+scoutMeta[key].type+'.html'"/>
             </div>
           </article>
           <md-button class='md-raised md-primary' ng-click='submit()'>
