@@ -12,36 +12,7 @@
         <div layout='column'>
           <article ng-repeat='(section, data) in scout' flex>
             <h4 class='md-title autocap'>{{section}}</h3>
-            <div ng-repeat='(key, val) in data'>
-
-              <div ng-if="scoutMeta[key].type=='boolean'">
-                <md-checkbox ng-model='data[key]' ng-if="scoutMeta[key].type=='boolean'" class='autocap'>
-                  {{scoutMeta[key].name}}
-                </md-checkbox>
-              </div>
-
-              <div ng-if="scoutMeta[key].type=='string'">
-                <md-input-container>
-                  <label class='autocap'>{{scoutMeta[key].name}}</label>
-                  <input type="text" ng-model='data[key]'>
-                </md-input-container>
-                </div>
-              
-              <div ng-if="scoutMeta[key].type=='number'">
-                <md-input-container>
-                  <label class='autocap'>{{scoutMeta[key].name}}</label>
-                  <input type="number" ng-model='data[key]'>
-                </md-input-container>
-              </div>
-              
-              <div ng-if="scoutMeta[key].type=='radio'">
-                <md-radio-group ng-model='data[key]'>
-                  <md-radio-button ng-repeat='(key, label) in scoutMeta[key].options' ng-value='{{key}}'>
-                    {{label}}
-                  </md-radio-button>
-                </md-radio-group>
-              </div>
-
+            <div ng-repeat='(key, val) in data' ng-include="templates/{{scoutMeta[key].type}}.html"/>
             </div>
           </article>
           <md-button class='md-raised md-primary' ng-click='submit()'>
