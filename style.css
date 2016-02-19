@@ -66,3 +66,9 @@ table {
 table td.team {
   padding: 0.2em;
 }
+
+input[type='text'].team {
+  max-width: 2.5em;
+  border-width: 0px;
+}
+
