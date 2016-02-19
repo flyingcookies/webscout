@@ -66,6 +66,23 @@ app.config(function($routeProvider, $mdThemingProvider){
 
 });
 
+app.filter('sortMatches', function(){
+  return function(items){
+    var filtered = []
+    var order = ['Quals', 'Quarters', 'Semis', 'Finals']
+    var keys = Object.keys(items)
+    keys.sort(function(a, b) {
+      var titleA = a.split(' ')
+      var titleB = b.split(' ')
+      if(titleA[0] == titleB[0]) {
+        return parseInt(titleA[1]) - parseInt(titleB[1])
+      }
+      return order.indexOf(titleA[0]) - order.indexOf(titleB[0])
+    })
+    return keys.map(function(k){return items[k]})
+  }
+});
+
 app.controller('AppCtrl', function($mdSidenav, $scope, $location, $http) {
   $scope.toggleSideNav = function(menuId) {
     $mdSidenav(menuId).toggle();

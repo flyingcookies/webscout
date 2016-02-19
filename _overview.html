@@ -90,7 +90,7 @@
             <th>Blue</th><th></th><th></th>
             <th>Score</th><th></th>
           </tr>
-          <tr ng-repeat="data in tournament.matches">
+          <tr ng-repeat="data in tournament.matches | sortMatches">
             <td>{{data.title}}</td>
             <td ng-repeat="(id, team) in data.description.li" class='team' ng-class='{red: id<3, blue: id>=3}'>
               <a ng-href='#/team/{{team}}'>
