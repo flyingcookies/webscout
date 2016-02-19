@@ -61,6 +61,10 @@ app.config(function($routeProvider, $mdThemingProvider){
     templateUrl: '_matchscout.html',
     controller: 'ScoutCtrl'
   }).
+  when('/editmatch', {
+    templateUrl: '_editmatch.html',
+    controller: 'EditCtrl'
+  }).
   when('/scout', { redirectTo: '/scout/match'}).
   otherwise({ redirectTo: '/overview' })
 
@@ -86,6 +90,11 @@ app.controller('AppCtrl', function($mdSidenav, $scope, $location, $http) {
         title: 'Match Scout',
         icon: 'add',
         path: '/scout/match'
+    },
+    {
+        title: 'Edit Match',
+        icon: 'assignment',
+        path: '/editmatch'
     }
   ];
 
@@ -284,6 +293,31 @@ app.controller('OverviewCtrl', function($scope, $location) {
 app.controller('TeamCtrl', function($scope, $routeParams, $location){
   console.log($routeParams.id)
   $scope.teamNumber = $routeParams.id
+});
+
+
+app.controller('EditCtrl', function($scope, $location){
+  $scope.addRow = function(){
+
+  };
+  $scope.editMatchType = function(index){
+
+  };
+
+
+  $scope.moveUp = function(match){
+    var keys = Object.keys($scope.tournament.matches)
+    var index = keys.indexOf(match.title)
+    if(index == 0)
+      return;
+
+    var previous = keys[index-1]
+    var previousMatch = $scope.tournament.matches[previous]
+    $scope.tournament.matches[match.title] = previousMatch
+    $scope.tournament.matches[previous] = match
+    previousMatch.title = match.title
+    match.title = previous
+  };
 });
 
 app.controller('ScoutCtrl', function($scope, $location, $http){
