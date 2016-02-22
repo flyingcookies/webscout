@@ -317,7 +317,15 @@ app.controller('EditCtrl', function($scope, $location){
   $scope.addRow = function(){
 
   };
-  $scope.editMatchType = function(index){
+
+  $scope.editMatchType = function(match, item){
+    var previousTitle = match.title;
+    var matchnum = 1;
+    for(;$scope.tournament.matches[item + ' ' + matchnum]; matchnum++){}
+    match.title = item + ' ' + matchnum;
+
+    delete $scope.tournament.matches[previousTitle];
+    $scope.tournament.matches[match.title] = match;
 
   };
 

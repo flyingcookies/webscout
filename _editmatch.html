@@ -27,8 +27,8 @@
                  {{data.title}}
               </md-button>
               <md-menu-content width="2">
-                <md-menu-item ng-repeat="item in ['Quals', 'Semis', 'Quarters', 'Finals']">
-                  <md-button ng-click="EditCtrl.editMatchType($index)">
+                <md-menu-item ng-repeat="item in ['Quals', 'Quarters', 'Semis', 'Finals']">
+                  <md-button ng-click="editMatchType(data, item)">
                     {{item}}
                   </md-button>
                 </md-menu-item>
