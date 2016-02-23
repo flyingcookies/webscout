@@ -318,6 +318,11 @@ app.controller('EditCtrl', function($scope, $location){
 
   };
 
+  $scope.editNewMatchType = function(){
+
+
+  };
+
   $scope.editMatchType = function(match, item){
     var previousTitle = match.title;
     var matchnum = 1;
