@@ -314,15 +314,24 @@ app.controller('TeamCtrl', function($scope, $routeParams, $location){
 
 
 app.controller('EditCtrl', function($scope, $location){
+  $scope.tempData = [];
+/*
+  Unnecessary because we now have live updates from server
   $scope.addRow = function(){
 
+
+      
+      $http.get('data/matchdata.json').success(function(data){
+        $scope.data.push();
+      }
+      
   };
 
   $scope.editNewMatchType = function(){
-
+      
 
   };
-
+*/
   $scope.editMatchType = function(match, item){
     var previousTitle = match.title;
     var matchnum = 1;
